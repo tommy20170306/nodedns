@@ -1,7 +1,15 @@
 const Buffer = require('buffer').Buffer;
 const c = console.log;
 
-const buf = Buffer.from('hello world ? 一', 'utf8');
+const buff = new Buffer(2);
+c(buff);
+c(`Size of buff = ${buff.length}`);
+
+const buff2 = new Buffer("Node NPM");
+c(Buffer.isEncoding("utf-8"));
+c(buff2.toString());
+
+/*const buf = Buffer.from('hello world ? 一', 'utf8');
 c(buf);
 c(buf.toString('binary'));
 c(buf.toString('hex'));
@@ -41,4 +49,4 @@ c(`buf1 = buf2 ? ${buf1.compare(buf2)}`);
 
 for(let i=0; i<buf2.length; i++){
 	c(buf2[i]);
-}
+}*/
