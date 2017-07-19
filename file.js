@@ -1,4 +1,8 @@
 const fs = require('fs');
+const express = require('express');
+const app = express();
+const port = 3030;
+
 const c = console.log;
 
 const foname = "resources";
@@ -36,11 +40,18 @@ function fileread(){
 	});
 
 	readStream.on('readable', () => {
-		let byteSize = 3;
+		let byteSize = 5;
 		let chunk;
+		let i = 1;
+		let output = "";
 		while( (chunk = readStream.read(byteSize))){
 			c(`Read: ${chunk}`);
+			output += `<br/> ${i++}: ${chunk} (${chunk.length} bytes)`;
 		}	
+
+		app.get('/', (req, res) => {
+			res.send(`<b>Read Log File:</b> ${output}`);
+		});
 	});
 }
 
@@ -50,9 +61,11 @@ function filetime(){
 		
 		//read modified time
 		fs.watchFile(ffname, (curr, prev) => {
-		  console.log(`the current mtime is: ${curr.mtime}`);
-		  console.log(`the previous mtime was: ${prev.mtime}`);
+		  c(`the current mtime is: ${curr.mtime}`);
+		  c(`the previous mtime was: ${prev.mtime}`);
 		});
 
 	});
 }
+
+app.listen(port);
